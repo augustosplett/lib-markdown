@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import fs from 'fs';
 
-const arqPath = './arquivos/texto1.md';
+//const arqPath = './arquivos/texto1.md';
 
 function extraiLinks(texto) {
     const regex = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm;
@@ -25,4 +25,4 @@ function loadFile(path){
     .catch( error => handleError(error))
 }
 
-loadFile(arqPath);
+export {loadFile};
