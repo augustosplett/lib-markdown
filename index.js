@@ -1,8 +1,6 @@
 import chalk from 'chalk';
 import fs from 'fs';
 
-//const arqPath = './arquivos/texto1.md';
-
 function extraiLinks(texto) {
     const regex = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm;
     const arrayResultados = [];
@@ -11,18 +9,19 @@ function extraiLinks(texto) {
       arrayResultados.push({ [temp[1]]: temp[2] })
     }
     return arrayResultados;
+
 }
 
 function handleError(error){
     throw new Error(chalk.red(error.code, 'File not found'));
 }
 
-function loadFile(path){
-    const encoding = 'utf-8'
-    fs.promises
-    .readFile(path, encoding)
-    .then( text => console.log(extraiLinks(text)))
-    .catch( error => handleError(error))
+export default async function loadFile(path){
+    try{
+        const encoding = 'utf-8';
+        const arquivo = await fs.promises.readFile(path, encoding);
+        return extraiLinks(arquivo);
+    }catch (err){
+        handleError(err);
+    }
 }
-
-export {loadFile};
